@@ -10,7 +10,7 @@ USER root
 RUN install-php-extensions exif intl bcmath gd
 
 # Install JavaScript dependencies
-ARG NODE_VERSION=20.18.0
+ARG NODE_VERSION=23.10.0
 ENV PATH=/usr/local/node/bin:$PATH
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
