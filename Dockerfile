@@ -73,6 +73,6 @@ COPY --chown=www-data:www-data . /var/www/html
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-RUN npm ci && \
+RUN npm install && \
     npm run build && \
     rm -rf node_modules
