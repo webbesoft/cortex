@@ -10,6 +10,12 @@ image: webbesoft/cortex
 servers:
   web:
     - 130.162.214.17
+  cron:
+    hosts:
+      - 130.162.214.17
+    cmd: php artisan schedule:work
+    options:
+      health-cmd: healthcheck-schedule
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -135,6 +141,7 @@ env:
 #
 ssh:
   user: ubuntu
+  keys: [ <%= ENV["SSH_KEY_LOCATION"] %> ]
 
 # Use a persistent storage volume.
 #
@@ -145,7 +152,7 @@ ssh:
 # hitting 404 on in-flight requests. Combines all files from new and old
 # version inside the asset_path.
 #
-# asset_path: /app/public/assets
+asset_path: /var/www/html/public/build
 
 # Configure rolling deploys by setting a wait time between batches of restarts.
 #
