@@ -71,8 +71,10 @@ ENV ROOT=/var/www/html \
 COPY --chown=www-data:www-data . /var/www/html
 
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-interaction
 
+# npm ci for npm install
 RUN npm install && \
     npm run build && \
     rm -rf node_modules
