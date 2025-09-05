@@ -73,9 +73,6 @@ COPY --chown=www-data:www-data . /var/www/html
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 # RUN composer install --no-interaction
-RUN php artisan wayfinder:generate --with-form
-
-RUN touch database/database.sqlite
 
 # npm ci for npm install
 RUN npm ci && \
