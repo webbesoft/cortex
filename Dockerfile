@@ -3,6 +3,9 @@ ARG APP_ENV
 
 FROM serversideup/php:8.4-fpm-nginx AS base
 
+LABEL org.opencontainers.image.source=https://github.com/webbesoft/cortex
+LABEL org.opencontainers.image.authors="Tawanda Munongo <ejmunongo@gmail.com>"
+
 # Switch to root so we can do root things
 USER root
 
@@ -49,7 +52,7 @@ USER www-data
 ###########################################
 # Final stage
 ###########################################
-FROM base
+FROM base as runner
 
 # These are environments variables from https://serversideup.net/open-source/docker-php/docs/reference/environment-variable-specification
 # Disable SSL on NGINX level, Kamal-proxy will handle that for us.
@@ -70,6 +73,7 @@ ENV ROOT=/var/www/html \
 # Copy the app files...
 COPY --chown=www-data:www-data . /var/www/html
 
+# WHYYYY? I am not using SQLITE!
 RUN touch ./database/database.sqlite
 
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
