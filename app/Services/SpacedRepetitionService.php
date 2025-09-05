@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Review;
 use App\Models\XpEvent;
 
-class SpacedRepetition
+class SpacedRepetitionService
 {
     /**
      * Process a review: update SM-2 scheduling + log XP.
@@ -34,7 +34,7 @@ class SpacedRepetition
             $review->repetitions = 0;
             $review->interval = 1;
             $review->due_at = $now->copy()->addDay();
-            $xp = 2; // small XP for effort, even if failed
+            $xp = 2;
         } else {
             // Case 2: Successful recall
             $review->repetitions++;
@@ -57,7 +57,6 @@ class SpacedRepetition
             }
         }
 
-        // Ease factor update
         $ef = $review->ease_factor;
         $ef = $ef + (0.1 - (5 - $quality) * (0.08 + (5 - $quality) * 0.02));
         if ($ef < 1.3) {
@@ -65,12 +64,10 @@ class SpacedRepetition
         }
         $review->ease_factor = $ef;
 
-        // Save review record
         $review->quality = $quality;
         $review->review_date = $now;
         $review->save();
 
-        // Log XP event
         XpEvent::create([
             'user_id' => $userId,
             'type' => 'review_card',

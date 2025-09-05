@@ -20,6 +20,11 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('streak')
+                    ->label("Streak"),
+                TextColumn::make('last_reviewed_at')
+                    ->dateTime()
+                    ->sortable(),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),

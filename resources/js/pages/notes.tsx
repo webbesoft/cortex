@@ -1,8 +1,11 @@
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Note, Tag } from '@/types/app-types';
-import { Head, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { Note, NoteForm } from '@/types/app-types';
+import { Head, useForm, usePage } from '@inertiajs/react';
+import { ReactEventHandler, useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -17,8 +20,32 @@ export default function Notes() {
         notes: Note[];
     }>();
 
-    const [markdown, setMarkdown] = useState<string>('# New note\n\nStart typing...');
     const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+
+    const { data, setData, errors, post, put, clearErrors, reset } = useForm<NoteForm>();
+
+    const submit: ReactEventHandler = (e) => {
+        e.preventDefault();
+        clearErrors();
+
+        if (selectedNote) {
+            put('/notes/' + selectedNote.id, {
+                onSuccess: () => {
+                    reset('title', 'body_md');
+                },
+            });
+        } else {
+            post('/notes', {
+                onSuccess: () => {
+                    reset('title', 'body_md');
+                },
+            });
+        }
+    };
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -36,20 +63,20 @@ export default function Notes() {
                                         className="cursor-pointer p-4 hover:bg-gray-50"
                                         onClick={() => {
                                             setSelectedNote(note);
-                                            setMarkdown(`# ${note.title}\n\n${note.excerpt ?? ''}`);
+                                            setData({ id: note.id, title: note.title, body_md: note.body_md });
                                         }}
                                     >
                                         <h3 className="text-sm font-semibold text-gray-900">{note.title}</h3>
-                                        {note.excerpt && <p className="mt-1 text-sm text-gray-600">{note.excerpt}</p>}
+                                        {note.body_md && <p className="mt-1 text-sm text-gray-600">{note.body_md}</p>}
                                         <div className="mt-2 flex flex-wrap items-center gap-2">
-                                            {note.tags.map((tag: Tag) => (
+                                            {/* {note.tags.map((tag: Tag) => (
                                                 <span
                                                     key={tag.id}
                                                     className="inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
                                                 >
                                                     {tag.title}
                                                 </span>
-                                            ))}
+                                            ))} */}
                                             <time dateTime="2025-09-04" className="ml-auto text-xs text-gray-400">
                                                 Updated: Sep 4, 2025
                                             </time>
@@ -67,47 +94,72 @@ export default function Notes() {
                         )}
                     </div>
 
-                    {/* Markdown editor + preview */}
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm" role="region" aria-label="Note editor">
-                        <div className="flex h-full flex-col">
-                            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-2">
-                                <h3 className="text-sm font-medium text-gray-900">{selectedNote ? `Editing: ${selectedNote.title}` : 'New Note'}</h3>
-                            </div>
+                        <form onSubmit={submit}>
+                            <div className="flex h-full flex-col">
+                                <div className="flex items-center justify-between border-b border-gray-200 px-4 py-2">
+                                    <h3 className="text-sm font-medium text-gray-900">
+                                        {selectedNote ? `Editing: ${selectedNote.title}` : 'New Note'}
+                                    </h3>
+                                </div>
 
-                            <div className="grid flex-1 grid-cols-1 divide-y divide-gray-200 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-                                {/* Editor */}
                                 <div className="flex flex-col">
-                                    <label htmlFor="markdown-editor" className="sr-only">
-                                        Note (Markdown)
-                                    </label>
-                                    <textarea
-                                        id="markdown-editor"
-                                        rows={12}
-                                        value={markdown}
-                                        onChange={(e) => setMarkdown(e.target.value)}
+                                    <Label htmlFor="note-title" className="p-2">
+                                        Title
+                                    </Label>
+                                    <Input
+                                        id="note-title"
+                                        type="text"
+                                        placeholder="Note title"
+                                        value={data.title}
+                                        onChange={(e) => setData({ ...data, title: e.target.value })}
                                         className="flex-1 resize-none border-0 p-4 text-sm text-gray-900 focus:ring-0"
                                     />
+                                    {errors.title && <p className="p-2 text-red-400">{errors.title}</p>}
                                 </div>
 
-                                {/* Preview */}
-                                <div className="prose prose-sm max-w-none overflow-y-auto p-4">
-                                    <ReactMarkdown>{markdown}</ReactMarkdown>
+                                <Separator />
+
+                                <div className="grid flex-1 grid-cols-1 divide-y divide-gray-200 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+                                    {/* Editor */}
+                                    <div className="flex flex-col">
+                                        <label htmlFor="markdown-editor" className="sr-only">
+                                            Note (Markdown)
+                                        </label>
+                                        <textarea
+                                            id="markdown-editor"
+                                            rows={12}
+                                            value={data.body_md}
+                                            placeholder="Contents"
+                                            onChange={(e) => setData({ ...data, body_md: e.target.value })}
+                                            className="flex-1 resize-none border-0 p-4 text-sm text-gray-900 focus:ring-0"
+                                        />
+                                        {errors.body_md && <p className="text-red-400">{errors.body_md}</p>}
+                                    </div>
+
+                                    {/* Preview */}
+                                    <div className="prose prose-sm max-w-none overflow-y-auto p-4">
+                                        <ReactMarkdown>{data.body_md}</ReactMarkdown>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end gap-2 border-t border-gray-200 bg-gray-50 px-4 py-3">
+                                    <button
+                                        type="submit"
+                                        className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+                                    >
+                                        Save Note
+                                    </button>
+                                    {/* <button
+                                        className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                        disabled
+                                        title="Select text to enable"
+                                    >
+                                        Create Flashcard from selection
+                                    </button> */}
                                 </div>
                             </div>
-
-                            <div className="flex justify-end gap-2 border-t border-gray-200 bg-gray-50 px-4 py-3">
-                                <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
-                                    Save Note
-                                </button>
-                                <button
-                                    className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                    disabled
-                                    title="Select text to enable"
-                                >
-                                    Create Flashcard from selection
-                                </button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </section>

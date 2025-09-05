@@ -18,7 +18,8 @@ class Review extends Model
         'quality',
         'ease_factor',
         'interval',
-        'due_at'
+        'due_at',
+        'repetitions'
     ];
 
     public function casts(): array

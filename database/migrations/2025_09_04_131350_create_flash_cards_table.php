@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('note_id')->references('id')->on('notes');
+
+            $table->softDeletes();
         });
     }
 
