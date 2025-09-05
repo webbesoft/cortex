@@ -52,7 +52,7 @@ USER www-data
 ###########################################
 # Final stage
 ###########################################
-FROM base as runner
+FROM base AS runner
 
 # These are environments variables from https://serversideup.net/open-source/docker-php/docs/reference/environment-variable-specification
 # Disable SSL on NGINX level, Kamal-proxy will handle that for us.
