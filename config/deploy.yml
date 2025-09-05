@@ -57,7 +57,7 @@ env:
     APP_NAME: 'Cortex'
     APP_DEBUG: 'false'
     FILESYSTEM_DISK: 's3'
-    DB_HOST: 'cortex-db'
+    DB_HOST: 'cortex'
     APP_FAKER_LOCALE: 'en_US'
     APP_FALLBACK_LOCALE: 'en'
     BCRYPT_ROUNDS: '12'
@@ -105,10 +105,6 @@ env:
     - MAILGUN_SECRET
     - MEMCACHED_HOST
     - PHP_CLI_SERVER_WORKERS
-    - PREZET_FILESYSTEM_DISK
-    - PREZET_INTERNAL_HOST
-    - PRO_MONTHLY_ID
-    - PRO_YEARLY_ID
     - QUEUE_CONNECTION
     - REDIS_CLIENT
     - REDIS_HOST

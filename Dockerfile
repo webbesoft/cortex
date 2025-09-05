@@ -75,6 +75,8 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 # RUN composer install --no-interaction
 RUN php artisan wayfinder:generate --with-form
 
+RUN touch database/database.sqlite
+
 # npm ci for npm install
 RUN npm ci && \
     npm run build && \
