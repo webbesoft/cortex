@@ -57,8 +57,8 @@ env:
     APP_NAME: 'Cortex'
     APP_DEBUG: 'false'
     FILESYSTEM_DISK: 's3'
-    DB_HOST: 'db'
-    DB_CONNECTION: 'mariadb'
+    DB_HOST: 'cortex-db'
+    DB_CONNECTION: 'sqlite'
     APP_FAKER_LOCALE: 'en_US'
     APP_FALLBACK_LOCALE: 'en'
     BCRYPT_ROUNDS: '12'
@@ -143,8 +143,8 @@ ssh:
 
 # Use a persistent storage volume.
 #
-volumes:
-  - "./database.sqlite:/var/www/html/database/database.sqlite"
+# volumes:
+  - "cortex/database.sqlite:/var/www/html/database/database.sqlite"
 #   - "app_storage:/app/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
@@ -162,17 +162,20 @@ asset_path: /var/www/html/public/build
 # Use accessory services (secrets come from .kamal/secrets).
 #
 accessories:
-  db:
-    image: mariadb:12-noble
-    host: 130.162.214.17
-    port: 3306
-    env:
-      clear:
-        MYSQL_ROOT_HOST: '%'
-      secret:
-        - MYSQL_ROOT_PASSWORD
-    directories:
-      - data:/var/lib/mysql
+  # db:
+  #   image: mariadb:12-noble
+  #   host: cortex.webbe.dev
+  #   port: "3306:3306"
+  #   env:
+  #     clear:
+  #       MARIADB_ROOT_HOST: '%'
+  #     secret:
+  #       - MARIADB_ROOT_PASSWORD:MYSQL_ROOT_PASSWORD
+  #       - MARIADB_USER:DB_USERNAME
+  #       - MARIADB_PASSWORD:DB_PASSWORD
+  #       - MARIADB_DATABASE:DB_DATABASE
+  #   directories:
+  #     - data:/var/lib/mysql:Z
   # redis:
   #   image: valkey/valkey:8
   #   host: 192.168.0.2
