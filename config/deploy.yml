@@ -144,7 +144,7 @@ ssh:
 # Use a persistent storage volume.
 #
 volumes:
-  - "cortex/database.sqlite:/var/www/html/database/database.sqlite"
+  - "cortex:/var/www/html"
 #   - "app_storage:/app/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
