@@ -73,10 +73,11 @@ ENV ROOT=/var/www/html \
 # Copy the app files...
 COPY --chown=www-data:www-data . /var/www/html
 
+RUN echo ${DB_CONNECTION}
+
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 # RUN composer install --no-interaction
-RUN php artisan wayfinder:generate --with-form
 
 # npm ci for npm install
 RUN npm ci && \
