@@ -56,6 +56,7 @@ env:
   clear:
     APP_NAME: 'Cortex'
     APP_DEBUG: 'false'
+    APP_ENV: 'production'
     FILESYSTEM_DISK: 's3'
     DB_HOST: 'cortex-db'
     DB_CONNECTION: 'sqlite'
