@@ -72,7 +72,6 @@ env:
   secret:
     - APP_KEY
     - APP_DOMAIN
-    - APP_HOST
     - APP_LOCALE
     - APP_MAINTENANCE_DRIVER
     - APP_URL_BULK_BUY

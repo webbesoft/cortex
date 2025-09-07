@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         //
         if (app()->isProduction()) {
             URL::forceHttps();
+            URL::forceRootUrl(config('app.url'));
         }
         Model::shouldBeStrict(! app()->isProduction());
     }
