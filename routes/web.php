@@ -11,18 +11,6 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::get('test', function () {
-    dd([
-        'APP_URL' => config('app.url'),
-        'ASSET_URL' => config('app.asset_url'),
-        'url()' => url('/flashcards'),
-        'asset()' => asset(''),
-        'isProduction' => app()->isProduction(),
-        'isLocal' => app()->isLocal(),
-        'environment' => app()->environment(),
-    ]);
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 

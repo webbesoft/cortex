@@ -57,6 +57,7 @@ env:
     APP_NAME: 'Cortex'
     APP_DEBUG: 'false'
     APP_URL: 'https://cortex.webbe.dev'
+    ASSET_URL: 'https://cortex.webbe.dev'
     APP_ENV: 'production'
     FILESYSTEM_DISK: 's3'
     DB_HOST: 'cortex-db'

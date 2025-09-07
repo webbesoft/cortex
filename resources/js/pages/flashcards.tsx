@@ -95,8 +95,6 @@ export default function Flashcards() {
             setOpen(true);
         }
         params.delete('create');
-
-        params.delete('create');
         const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
 
         router.visit(newUrl, {
