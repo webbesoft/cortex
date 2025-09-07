@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Flashcard, FlashcardForm, Tag } from '@/types/app-types';
-import { Form, Head, useForm, usePage } from '@inertiajs/react';
+import { Form, Head, router, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -95,8 +95,16 @@ export default function Flashcards() {
             setOpen(true);
         }
         params.delete('create');
-        params = params;
-    });
+
+        params.delete('create');
+        const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+
+        router.visit(newUrl, {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }, []);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -120,7 +128,7 @@ export default function Flashcards() {
                                     <div className="mt-1 flex flex-wrap gap-1">
                                         {card.tags &&
                                             card.tags.map((tag) => (
-                                                <Badge key={tag.id} variant="secondary">
+                                                <Badge key={tag.id} variant="outline" className="bg-accent text-accent-foreground">
                                                     {tag.title}
                                                 </Badge>
                                             ))}
