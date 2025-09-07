@@ -17,6 +17,14 @@ class Note extends Model
         'body_md'
     ];
 
+    public function casts(): array
+    {
+        return [
+            "created_at" => "date:Y-m-d h:i A",
+            "updated_at" => "date:Y-m-d h:i A"
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

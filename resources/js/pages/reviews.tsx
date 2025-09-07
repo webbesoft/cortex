@@ -70,16 +70,16 @@ export default function Reviews() {
                 <Head title="Reviews" />
                 <section className="p-4 sm:p-6" aria-labelledby="review-title">
                     <header className="mb-4">
-                        <h2 id="review-title" className="text-lg font-semibold text-gray-900">
+                        <h2 id="review-title" className="text--primary-foreground text-lg font-semibold">
                             Review Session
                         </h2>
                     </header>
 
-                    <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50 p-8 text-center">
+                    <div className="bg--card text--card-foreground rounded-lg border border-dashed border-gray-200 p-8 text-center">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 12h6M12 9v6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="mt-4 text-sm font-semibold text-gray-900">No reviews due today</h3>
+                        <h3 className="text--muted-foreground mt-4 text-sm font-semibold">No reviews due today</h3>
                         <p className="mt-2 text-sm text-gray-500">You're all caught up — come back tomorrow or add more cards.</p>
                         <div className="mt-4 flex justify-center gap-3">
                             <Button asChild>
@@ -111,7 +111,7 @@ export default function Reviews() {
                 </header>
 
                 {/* Progress */}
-                <Card className="mb-6">
+                <Card className="bg--card text--card-foreground mb-6">
                     <CardContent className="p-4">
                         <div className="mb-2 text-sm text-gray-700">
                             Card <strong>{index + 1}</strong> of <strong>{total}</strong>
@@ -133,7 +133,7 @@ export default function Reviews() {
                     >
                         {/* Front */}
                         <Card
-                            className="absolute inset-0 flex flex-col"
+                            className="bg--card text--card-foreground absolute inset-0 flex flex-col"
                             style={{ backfaceVisibility: 'hidden' }}
                             aria-hidden={revealed}
                             role="group"
@@ -168,7 +168,7 @@ export default function Reviews() {
 
                         {/* Back */}
                         <Card
-                            className="absolute inset-0 flex flex-col"
+                            className="bg--card text--card-foreground absolute inset-0 flex flex-col"
                             style={{
                                 backfaceVisibility: 'hidden',
                                 transform: 'rotateY(180deg)',

@@ -95,7 +95,7 @@ export default function Flashcards() {
             setOpen(true);
         }
         params.delete('create');
-        console.log(params);
+        params = params;
     });
 
     return (
@@ -112,15 +112,15 @@ export default function Flashcards() {
                 </header>
 
                 {flashcards && flashcards.length > 0 ? (
-                    <ul role="list" className="divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white shadow-sm">
+                    <ul role="list" className="bg--card text--card-foreground border--muted divide-y divide-muted rounded-lg border shadow-sm">
                         {flashcards.map((card) => (
                             <li key={card.id} className="flex items-start justify-between gap-4 p-4" data-card-id={card.id}>
                                 <div className="flex-1">
-                                    <div className="text-sm font-medium text-gray-900">{card.question}</div>
+                                    <div className="text-sm font-medium">{card.question}</div>
                                     <div className="mt-1 flex flex-wrap gap-1">
                                         {card.tags &&
                                             card.tags.map((tag) => (
-                                                <Badge key={tag.id} variant="outline">
+                                                <Badge key={tag.id} variant="secondary">
                                                     {tag.title}
                                                 </Badge>
                                             ))}
@@ -142,18 +142,11 @@ export default function Flashcards() {
                         ))}
                     </ul>
                 ) : (
-                    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-10 text-center">
-                        <svg
-                            className="h-12 w-12 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
+                    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">
+                        <svg className="h-12 w-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-semibold text-gray-900">No flashcards yet</h3>
+                        <h3 className="mt-2 text-sm font-semibold">No flashcards yet</h3>
                         <p className="mt-1 text-sm text-gray-500">Get started by creating your first card.</p>
                         <div className="mt-4">
                             <Button onClick={openCreateDialog}>Create Flashcard</Button>
@@ -181,7 +174,7 @@ export default function Flashcards() {
                                         }
                                         placeholder="Enter your question…"
                                     />
-                                    {errors.question && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.question}</p>}
+                                    {errors.question && <p className="text--destructive mt-1 text-sm">{errors.question}</p>}
                                 </div>
                                 <div>
                                     <Label htmlFor="answer">Answer</Label>

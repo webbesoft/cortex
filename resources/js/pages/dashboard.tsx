@@ -35,7 +35,7 @@ export default function Dashboard() {
             <div className="flex h-full flex-1 flex-col gap-6 p-4 sm:p-6">
                 <section className="grid gap-6 md:grid-cols-3">
                     {/* Streak Card */}
-                    <Card className="flex flex-col items-center justify-center text-center">
+                    <Card className="bg--card text--card-foreground flex flex-col items-center justify-center text-center">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2 text-orange-600">
                                 <Flame className="h-6 w-6" />
@@ -49,7 +49,7 @@ export default function Dashboard() {
                     </Card>
 
                     {/* XP / Level Card */}
-                    <Card className="col-span-2">
+                    <Card className="bg--card text--card-foreground col-span-2">
                         <CardHeader className="flex flex-row items-center justify-between">
                             <CardTitle>XP Progress</CardTitle>
                             <Badge variant="secondary">Level {currentLevel}</Badge>
@@ -63,7 +63,7 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Due Today */}
-                    <Card className="col-span-1 flex flex-col items-center justify-center">
+                    <Card className="bg--card text--card-foreground col-span-1 flex flex-col items-center justify-center">
                         <CardHeader>
                             <CardTitle>Due Today</CardTitle>
                         </CardHeader>
@@ -77,7 +77,7 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Quick Actions */}
-                    <Card className="col-span-2">
+                    <Card className="bg--card text--card-foreground col-span-2">
                         <CardHeader>
                             <CardTitle>Quick Actions</CardTitle>
                         </CardHeader>
@@ -90,7 +90,7 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Quick Due List */}
-                    <Card className="col-span-3">
+                    <Card className="bg--card text--card-foreground col-span-3">
                         <CardHeader>
                             <CardTitle>Quick Due List</CardTitle>
                         </CardHeader>
