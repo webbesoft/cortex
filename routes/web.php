@@ -11,7 +11,7 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::get('/test', function () {
+Route::get('test', function () {
     dd([
         'APP_URL' => config('app.url'),
         'ASSET_URL' => config('app.asset_url'),
