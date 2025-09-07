@@ -2,18 +2,16 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Review;
 use App\Models\XpEvent;
+use Carbon\Carbon;
 
 class SpacedRepetitionService
 {
     /**
      * Process a review: update SM-2 scheduling + log XP.
      *
-     * @param Review $review
-     * @param int $quality User rating: 0–5
-     * @param int $userId
+     * @param  int  $quality  User rating: 0–5
      * @return array { review: Review, xp: int }
      */
     public static function processReview(Review $review, int $quality, int $userId): array
@@ -50,10 +48,13 @@ class SpacedRepetitionService
             $review->due_at = $now->copy()->addDays($review->interval);
 
             switch ($quality) {
-                case 3: $xp = 5; break;   
-                case 4: $xp = 7; break;   
-                case 5: $xp = 10; break;  
-                default: $xp = 5;         
+                case 3: $xp = 5;
+                    break;
+                case 4: $xp = 7;
+                    break;
+                case 5: $xp = 10;
+                    break;
+                default: $xp = 5;
             }
         }
 
@@ -74,7 +75,7 @@ class SpacedRepetitionService
             'amount' => $xp,
             'meta_json' => json_encode([
                 'flashcard_id' => $review->flashcard_id,
-                'quality' => $quality
+                'quality' => $quality,
             ]),
         ]);
 

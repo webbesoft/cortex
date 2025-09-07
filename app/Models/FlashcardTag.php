@@ -13,7 +13,7 @@ class FlashcardTag extends Model
 
     protected $fillable = [
         'flash_card_id',
-        'tag_id'
+        'tag_id',
     ];
 
     public function flashcard(): BelongsTo

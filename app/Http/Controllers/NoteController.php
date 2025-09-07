@@ -15,7 +15,7 @@ class NoteController extends Controller
     public function index(): Response
     {
         return Inertia::render('notes', [
-            'notes' => Auth::user()->notes()->get()
+            'notes' => Auth::user()->notes()->get(),
         ]);
     }
 
@@ -23,20 +23,21 @@ class NoteController extends Controller
     {
         $request->validate([
             'body_md' => 'required',
-            'title' => 'required'
+            'title' => 'required',
         ]);
 
         try {
             Note::create([
                 'body_md' => $request->input('body_md'),
                 'title' => $request->input('title'),
-                'user_id' => Auth::user()->id
-            ]);   
+                'user_id' => Auth::user()->id,
+            ]);
         } catch (\Throwable $th) {
-            Log::error("Failed to create note", [
+            Log::error('Failed to create note', [
                 'message' => $th->getMessage(),
             ]);
-            return response("Failed to create note", 422);
+
+            return response('Failed to create note', 422);
         }
 
         return back()->with('success', 'Operation completed successfully');

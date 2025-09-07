@@ -19,14 +19,14 @@ class Review extends Model
         'ease_factor',
         'interval',
         'due_at',
-        'repetitions'
+        'repetitions',
     ];
 
     public function casts(): array
     {
         return [
-            "review_date" => "date",
-            "due_at" => 'date'
+            'review_date' => 'date',
+            'due_at' => 'date',
         ];
     }
 

@@ -21,7 +21,7 @@ class FlashCardController extends Controller
     {
         return Inertia::render('flashcards', [
             'flashcards' => FlashCard::where('user_id', Auth::user()->id)->with(['tags'])->get()->toArray(),
-            'availableTags' => Tag::all()
+            'availableTags' => Tag::all(),
         ]);
     }
 
@@ -32,13 +32,13 @@ class FlashCardController extends Controller
         $request->validate([
             'question' => 'required|max:255',
             'answer' => 'required|max:255',
-            'tag' => 'required|max:255'
+            'tag' => 'required|max:255',
         ]);
 
         try {
             DB::transaction(function () use ($request, $user) {
                 $tag = Tag::firstOrCreate([
-                    'title' => ucfirst($request->input('tag'))
+                    'title' => ucfirst($request->input('tag')),
                 ]);
 
                 $flashcard = FlashCard::create([
@@ -49,23 +49,23 @@ class FlashCardController extends Controller
 
                 FlashcardTag::create([
                     'flash_card_id' => $flashcard->id,
-                    'tag_id' => $tag->id
+                    'tag_id' => $tag->id,
                 ]);
 
                 Review::create([
                     'user_id' => $user->id,
                     'flashcard_id' => $flashcard->id,
                     'review_date' => now(),
-                    'due_at' => now()->addDay()
+                    'due_at' => now()->addDay(),
                 ]);
-            }); 
+            });
         } catch (Exception $e) {
-            Log::error("Failed to create flashcard", [
+            Log::error('Failed to create flashcard', [
                 'exception' => $e->getMessage(),
             ]);
         }
 
-        return redirect("/flashcards");
+        return redirect('/flashcards');
     }
 
     public function update(FlashCard $flashcard, Request $request)
@@ -84,13 +84,14 @@ class FlashCardController extends Controller
 
             FlashcardTag::firstOrCreate([
                 'flash_card_id' => $flashcard->id,
-                'tag_id' => $tag->id
+                'tag_id' => $tag->id,
             ]);
         } catch (Exception $e) {
-            Log::error("Failed to update flashcard", [
+            Log::error('Failed to update flashcard', [
                 'exception' => $e->getMessage(),
             ]);
-            return response("Failed to update flashcard", 500);
+
+            return response('Failed to update flashcard', 500);
         }
 
         return back()->with('success', 'Operation completed successfully');
@@ -100,7 +101,7 @@ class FlashCardController extends Controller
     {
         $fcReview = Review::firstOrCreate([
             'user_id' => Auth::user()->id,
-            'flashcard_id' => $flash_card->id
+            'flashcard_id' => $flash_card->id,
         ]);
 
         $fcReview->update([
@@ -108,6 +109,6 @@ class FlashCardController extends Controller
             'review_date' => now(),
         ]);
 
-        return redirect("/reviews");
+        return redirect('/reviews');
     }
 }

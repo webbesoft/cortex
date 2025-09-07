@@ -21,14 +21,14 @@ class ReviewController extends Controller
         $dueReviews = $user->reviews()->whereDate('due_at', Carbon::now())->with(['flashcard'])->get();
 
         return Inertia::render('reviews', [
-            'due_reviews' => $dueReviews
+            'due_reviews' => $dueReviews,
         ]);
     }
 
     public function grade(Review $review, Request $request)
     {
         $request->validate([
-            'quality_choice' => 'required|integer:strict'
+            'quality_choice' => 'required|integer:strict',
         ]);
 
         $review = SpacedRepetitionService::processReview($review, $request->input('quality_choice'), Auth::user()->id);

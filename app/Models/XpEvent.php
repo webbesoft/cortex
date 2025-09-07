@@ -15,13 +15,13 @@ class XpEvent extends Model
         'user_id',
         'type',
         'amount',
-        'meta_json'
+        'meta_json',
     ];
 
     public function casts(): array
     {
         return [
-            "meta_json" => "json"
+            'meta_json' => 'json',
         ];
     }
 

@@ -21,7 +21,7 @@ class UsersTable
                     ->label('Email address')
                     ->searchable(),
                 TextColumn::make('streak')
-                    ->label("Streak"),
+                    ->label('Streak'),
                 TextColumn::make('last_reviewed_at')
                     ->dateTime()
                     ->sortable(),
