@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
-import { route } from 'ziggy-js';
 
 export default function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -33,7 +32,7 @@ export default function DeleteUser() {
 
                         <Form
                             method="delete"
-                            action={route('profile.destroy')}
+                            action="/settings/profile"
                             options={{
                                 preserveScroll: true,
                             }}

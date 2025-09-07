@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { route } from 'ziggy-js';
 
 interface LoginProps {
     status?: string;
@@ -19,7 +18,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
             <Head title="Log in" />
 
-            <Form method="post" action={route('login')} resetOnSuccess={['password']} className="flex flex-col gap-6">
+            <Form method="post" action={'/login'} resetOnSuccess={['password']} className="flex flex-col gap-6">
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
@@ -42,7 +41,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 <div className="flex items-center">
                                     <Label htmlFor="password">Password</Label>
                                     {canResetPassword && (
-                                        <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
+                                        <TextLink href={'/forgot-password'} className="ml-auto text-sm" tabIndex={5}>
                                             Forgot password?
                                         </TextLink>
                                     )}
@@ -72,7 +71,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                         <div className="text-center text-sm text-muted-foreground">
                             Don't have an account?{' '}
-                            <TextLink href={route('register')} tabIndex={5}>
+                            <TextLink href={'/register'} tabIndex={5}>
                                 Sign up
                             </TextLink>
                         </div>

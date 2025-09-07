@@ -19,7 +19,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
 
             <Form
                 method="post"
-                action={route('password.store')}
+                action={'/reset-password'}
                 transform={(data) => ({ ...data, token, email })}
                 resetOnSuccess={['password', 'password_confirmation']}
             >
