@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { route } from 'ziggy-js';
 
 export default function ConfirmPassword() {
     return (

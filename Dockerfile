@@ -73,11 +73,8 @@ ENV ROOT=/var/www/html \
 # Copy the app files...
 COPY --chown=www-data:www-data . /var/www/html
 
-RUN touch ./database/database.sqlite
-
 # Re-run install, but now with scripts and optimizing the autoloader (should be faster)...
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-# RUN composer install --no-interaction
 
 # npm ci for npm install
 RUN npm ci && \
