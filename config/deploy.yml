@@ -30,7 +30,7 @@ proxy:
   host: cortex.webbe.dev
   # Proxy connects to your container on port 80 by default.
   app_port: 8080
-  forward_headers: true
+  # forward_headers: true
 
 # Credentials for your image host.
 registry:
