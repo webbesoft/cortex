@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,12 +19,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(UrlGenerator $url): void
     {
         //
         if (app()->isProduction()) {
-            URL::forceHttps();
-            URL::forceRootUrl(config('app.url'));
+            $url->forceHttps();
         }
         Model::shouldBeStrict(! app()->isProduction());
     }
